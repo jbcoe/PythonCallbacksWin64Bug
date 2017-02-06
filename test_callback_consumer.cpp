@@ -3,9 +3,13 @@
 
 int main()
 {
-  auto increment = [](void* i){ ++*static_cast<int*>(i); };
+  auto increment = [](callback_padding_t, void* i)
+  { 
+    ++*static_cast<int*>(i); 
+  };
+  
   int x = 0;
-  callback_consumer_invoke(increment, &x);
+  callback_consumer_invoke(increment, callback_padding_t{}, &x);
 
   assert(x == 1);
 }
