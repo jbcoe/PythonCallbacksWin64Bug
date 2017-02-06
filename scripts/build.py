@@ -76,15 +76,6 @@ def _get_cmake_invocation(args):
 
 def _get_build_invocation(args):
     invocation = ['cmake', '--build', args.output_path]
-    if platform.system() == 'Windows':
-        invocation.extend(['--config', args.build_config, '--', '-m'])
-    if platform.system() != 'Windows':
-        invocation.append('--')
-        if args.force:
-            invocation.append('-k0')
-        if args.verbose:
-            invocation.append('-v')
-
     return invocation
 
 
