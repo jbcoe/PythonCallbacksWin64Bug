@@ -5,7 +5,7 @@ CallbackType = CFUNCTYPE(c_int, py_object)
 
 if platform.system() == "Windows":
     library_path = "./callback_consumer.dll"
-if platform.system() == "Darwin":
+elif platform.system() == "Darwin":
     library_path = "./libcallback_consumer.dylib"
 else:
     library_path = "./libcallback_consumer.so"
