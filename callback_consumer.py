@@ -1,7 +1,10 @@
 from ctypes import *
 import platform
 
-CallbackType = CFUNCTYPE(c_int, py_object)
+class Padding(Structure):
+    _fields_ = [("_kind_id", c_int), ("xdata", c_int), ("data", c_void_p * 3)]
+
+CallbackType = CFUNCTYPE(c_int, Padding, py_object)
 
 if platform.system() == "Windows":
     library_path = "./callback_consumer.dll"
@@ -13,7 +16,7 @@ else:
 lib = cdll.LoadLibrary(library_path)
 
 method_list = [
-    ("callback_consumer_invoke", [CallbackType, py_object], None)
+    ("callback_consumer_invoke", [CallbackType, Padding, py_object], None)
 ]
 
 # library loading and method registrations
@@ -35,4 +38,4 @@ for m in method_list:
 
 
 def invoke(f, py_args):
-    lib.callback_consumer_invoke(f, py_arg)
+    lib.callback_consumer_invoke(f, Padding(), py_args)
