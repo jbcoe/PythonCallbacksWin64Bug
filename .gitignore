@@ -30,3 +30,6 @@
 
 # Compiled Python bytecode
 *.pyc
+
+# build dir
+build
